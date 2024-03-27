@@ -27,7 +27,7 @@ class NomadTask(Generic[T], Callable[[Callable[[T], Any], T], Any]):
 
         The task is useful for creating a call graph of functions that can be
         executed later.
-        """
+    """
 
     def __init__(self, func: Callable[[T], Any], value: T) -> None:
         self.func = func
@@ -49,4 +49,6 @@ class NomadTask(Generic[T], Callable[[Callable[[T], Any], T], Any]):
         """
         Dunder method to add the value to another object.
         """
-        return Nomad(lambda x: x + other) << self.func(self.value) >> Results  # all nomads are monads but not all monads are nomads
+        return (
+            Nomad(lambda x: x + other) << self.func(self.value) >> Results
+        )  # all nomads are monads but not all monads are nomads

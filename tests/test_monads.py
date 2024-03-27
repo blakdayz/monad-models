@@ -24,7 +24,12 @@ def test_monad_class_overrides_lshift():
 
 
 def test_compound_nomad_class_function_chaining_produces_expected():
-    actual = monads.CompoundMonad(2) << (lambda x: x + 1) << (lambda x: x * "111") << (lambda x: x + "010")
+    actual = (
+        monads.CompoundMonad(2)
+        << (lambda x: x + 1)
+        << (lambda x: x * "111")
+        << (lambda x: x + "010")
+    )
     assert actual.value == 6
 
 
@@ -48,7 +53,7 @@ def test_monad_string_method_is_inhereted_correctly():
 
 
 def test_maybe_monad_doesnt_run_functions_when_none():
-    actual = monads.Maybe(None).build_path(lambda x: x ** 2)
+    actual = monads.Maybe(None).build_path(lambda x: x**2)
     assert actual.value is None
 
 
@@ -96,7 +101,12 @@ def test_result_monad_keeps_value_if_present_with_unwrap_or():
 
 
 def test_result_monad_otherwise_works_as_normal():
-    actual = monads.Encapsulate(2).build_path(lambda x: x + 1).build_path(lambda x: x * 2).unwrap()
+    actual = (
+        monads.Encapsulate(2)
+        .build_path(lambda x: x + 1)
+        .build_path(lambda x: x * 2)
+        .unwrap()
+    )
     assert actual == 6
 
 

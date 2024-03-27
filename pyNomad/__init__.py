@@ -8,10 +8,5 @@ Simple monad containers for functional chaining
 """
 from typing import TypeVar
 
-T = TypeVar('T')
-U = TypeVar('U')
-
-
-
-
-
+T = TypeVar("T")
+U = TypeVar("U")

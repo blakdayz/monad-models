@@ -55,18 +55,18 @@ class AsyncNomad(Nomad, Generic[T], ABC):
 
     def __lshift__(self, other) -> "NomadTask":
         """
-      Method to bind a task of asynchronous Monad meaning that it can be used to chain functions together without
-        executing them. They will be executed when the monad is unwrapped, and those functions will be executed
-        asynchronously with the asyncio library. The right shift chains normal functions together, but the left shift
+        Method to bind a task of asynchronous Monad meaning that it can be used to chain functions together without
+          executing them. They will be executed when the monad is unwrapped, and those functions will be executed
+          asynchronously with the asyncio library. The right shift chains normal functions together, but the left shift
 
 
-        ```python
-        AsyncMonad(2) >> (lambda x: x+1) << (lambda x: x+2)
-        ```
+          ```python
+          AsyncMonad(2) >> (lambda x: x+1) << (lambda x: x+2)
+          ```
 
-        In CompoundMonad, this will be used to add a function
-        to the call graph without executing it. It will be
-        executed when the monad is unwrapped.
+          In CompoundMonad, this will be used to add a function
+          to the call graph without executing it. It will be
+          executed when the monad is unwrapped.
 
         """
         return self.build_path(other)

@@ -5,7 +5,6 @@ A class that
 from pyNomad.Capsules.Monads import Monad
 
 
-
 class List(Monad, Generic[T]):
     """
     Monad to apply function to all items in list.

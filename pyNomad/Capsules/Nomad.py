@@ -24,6 +24,8 @@ from pyNomad.Capsules.Monads import Monad
 
 
 class Nomad(Monad, metaclass=ABCMeta):
+    """ """
+
     def __init__(self: Any, value: T) -> None:
         """
         Initialise a monad with the given value. This is a compound monad
@@ -106,7 +108,9 @@ class Nomad(Monad, metaclass=ABCMeta):
         """
         Validates the byte_arrays signature to ensure that it has not been corrupted
         """
-        self.logger.debug(f"Checking signature of {value_bytes} with signature {signature}")
+        self.logger.debug(
+            f"Checking signature of {value_bytes} with signature {signature}"
+        )
         return self.sign(value_bytes) == signature
 
     @abstractmethod

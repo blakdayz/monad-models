@@ -52,6 +52,7 @@ class ChangeState(NomadTask, Generic[T, U]):
 
         """
         self.previous_value = self.value  # type: ignore
+
         def action(value: T):
             """
             Function to add the value to another object to be be bound and tracked

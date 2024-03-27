@@ -4,6 +4,7 @@ The base class for all monads.
 
 import logging
 from typing import Any, Generic
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 from pyNomad import T
@@ -34,7 +35,6 @@ class Monad(Generic[T]):
         Initialise a monad with the given value
         """
         self.value: T = value
-
 
     def build_path(self, func) -> "Monad":
         """

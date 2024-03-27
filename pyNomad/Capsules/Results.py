@@ -18,9 +18,6 @@ global HISTORY
 HISTORY = []
 
 
-
-
-
 def handle_error(e: Exception = None):
     """
     Handle the error safely and return the error, if needed, to the caller.
@@ -30,7 +27,7 @@ def handle_error(e: Exception = None):
 
     # Handle the error if needed here and return the error if needed to the caller
 
-    logging.getLogger(__name__).error(f'Error was safely handled and returned {e}')
+    logging.getLogger(__name__).error(f"Error was safely handled and returned {e}")
     return e
 
 
@@ -44,8 +41,12 @@ class Encapsulate(Monad, Generic[T]):
 
     """
 
-    def __init__(self, value: T, exception: Optional[Type[Exception]] = None,
-                 exception_handler_func: Optional[Callable] = None):
+    def __init__(
+        self,
+        value: T,
+        exception: Optional[Type[Exception]] = None,
+        exception_handler_func: Optional[Callable] = None,
+    ):
         """
         Create Encapsulate monad with value and exception
         (one of which will always be None)
@@ -130,11 +131,15 @@ class Encapsulate(Monad, Generic[T]):
         except Exception as e:
             if self.RaiseOnException:
                 self.exception = e
-                self.logger = logging.getLogger(__name__) if not self.logger else self.logger
+                self.logger = (
+                    logging.getLogger(__name__) if not self.logger else self.logger
+                )
                 self.logger.error(e)
             else:
                 self.exception = e
-                self.logger = logging.getLogger(__name__) if not self.logger else self.logger
+                self.logger = (
+                    logging.getLogger(__name__) if not self.logger else self.logger
+                )
                 self.logger.error(e)
                 tb = e.__traceback__ if hasattr(e, "traceback__") else None
                 if self.exception_handler_func:
@@ -205,11 +210,18 @@ class Encapsulate(Monad, Generic[T]):
 
         if self.exception:
             """
-            If we have an exception at unwrap time, we need to handle it. This give the task the opportunity to handle the exception."""
+            If we have an exception at unwrap time, we need to handle it. This give the task the opportunity to handle the exception.
+            """
             self.result = f"Result is {self.value}Exception: {self.exception} was raised on unwrap"
-            self.logger = logging.getLogger(__name__) if not self.logger else self.logger
+            self.logger = (
+                logging.getLogger(__name__) if not self.logger else self.logger
+            )
             self.logger.error(self.exception)
-            if unwrap_time_exception_handler_func and (self.RaiseOnException) is False or None:
+            if (
+                unwrap_time_exception_handler_func
+                and (self.RaiseOnException) is False
+                or None
+            ):
                 unwrap_time_exception_handler_func(self.exception)
             elif self.RaiseOnException is False:
                 self.exception_handler_func(self.exception)
@@ -236,7 +248,6 @@ class Encapsulate(Monad, Generic[T]):
 if __name__ == "__main__":
     from pyNomad.Capsules import Nomad
 
-
     def simulate_divide_by_zero(x) -> Exception:
         """
         DIVIDE
@@ -244,14 +255,12 @@ if __name__ == "__main__":
         """
         raise ZeroDivisionError("Cannot divide by zero")
 
-
     def divide_by_zero(x) -> Exception:
         """
         DIVIDE
         BY ZERO
         """
         return x / 0
-
 
     def divide_by_zero_(x) -> Exception:
         """
@@ -265,18 +274,14 @@ if __name__ == "__main__":
 
         raise Exception(f"The operation succeeded f{str(x)}?")
 
-
     def simulate_add_one(x):
         return x + 1
-
 
     def add_one(x):
         return x + 1
 
-
     def add_two(x):
         return x + 2
-
 
     def print_result(x):
         """
@@ -289,7 +294,6 @@ if __name__ == "__main__":
         """
         print(x)
         return x
-
 
     class VibratingBox:  # pylint: disable=too-few-public-methods
         """

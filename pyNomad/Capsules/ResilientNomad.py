@@ -130,7 +130,7 @@ class Nomad(Monad, metaclass=ABCMeta):
 
 
 class CampaignExecutorNomad(Nomad, Generic[T]):
-    """ (formerly Compounds())
+    """(formerly Compounds())
     Campaign Executor - Monad that can recover from errors and
     execute a campaign of functions asynchronously
     Supports async function chaining and call graph generation
@@ -218,7 +218,9 @@ class CampaignExecutorNomad(Nomad, Generic[T]):
         except ZeroDivisionError as e:
             self.logger.error(f"{e} - {func.__name__}")
 
-            self.value = self.retry(func, lambda x: 0)  # Retry with alternative strategy
+            self.value = self.retry(
+                func, lambda x: 0
+            )  # Retry with alternative strategy
         except Exception as e:
             self.error = e
         return self
